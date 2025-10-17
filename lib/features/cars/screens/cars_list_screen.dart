@@ -15,16 +15,46 @@ class CarsListScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Available Cars'),
       ),
-      body: ListView.builder(
-        itemCount: cars.length,
-        itemBuilder: (context, index) {
-          final car = cars[index];
-          return ListTile(
-            title: Text(car.name),
-            subtitle: Text('${car.type} - \$${car.pricePerDay}/day'),
+      body: CarsListView(
+        cars: cars,
+        onBookTap: (car) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Booking ${car.name}')),
           );
         },
       ),
+    );
+  }
+}
+
+class CarsListView extends StatelessWidget {
+  final List<CarModel> cars;
+  final Function(CarModel) onBookTap;
+
+  const CarsListView({
+    super.key,
+    required this.cars,
+    required this.onBookTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: cars.length,
+      itemBuilder: (context, index) {
+        final car = cars[index];
+        return Card(
+          margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          child: ListTile(
+            title: Text(car.name),
+            subtitle: Text('${car.type} - \$${car.pricePerDay}/day'),
+            trailing: ElevatedButton(
+              onPressed: () => onBookTap(car),
+              child: Text('Book'),
+            ),
+          ),
+        );
+      },
     );
   }
 }
