@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'features/cars/screens/cars_list_screen.dart';
+import 'features/cars/screens/cars_container.dart';
 
 class CarRentalApp extends StatelessWidget {
   const CarRentalApp({super.key});

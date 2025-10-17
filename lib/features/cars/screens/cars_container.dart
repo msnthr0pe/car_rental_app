@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/car_model.dart';
 import '../cars_repository.dart';
 import 'package:car_rental_app/features/bookings/screens/booking_form_screen.dart';
+import 'package:car_rental_app/features/bookings/screens/bookings_screen.dart';
 import 'package:car_rental_app/shared/widgets/car_row.dart';
 
 class CarsListScreen extends StatelessWidget {
@@ -15,9 +16,9 @@ class CarsListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Available Cars'),
+        title: const Text('Available Cars'),
       ),
-      body: CarsListView(
+      body: CarsContainer(
         cars: cars,
         onBookTap: (car) {
           Navigator.push(
@@ -28,26 +29,39 @@ class CarsListScreen extends StatelessWidget {
           );
         },
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: const Icon(Icons.list_alt),
+        label: const Text('My Bookings'),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const BookingsScreen(),
+            ),
+          );
+        },
+      ),
     );
+
   }
 }
 
-class CarsListView extends StatefulWidget {
+
+class CarsContainer extends StatefulWidget {
   final List<CarModel> cars;
   final Function(CarModel) onBookTap;
 
-  const CarsListView({
+  const CarsContainer({
     super.key,
     required this.cars,
     required this.onBookTap,
   });
 
   @override
-  _CarsListViewState createState() => _CarsListViewState();
+  _CarsContainerState createState() => _CarsContainerState();
 }
 
-// CarsListScreen.dart
-class _CarsListViewState extends State<CarsListView> {
+class _CarsContainerState extends State<CarsContainer> {
   late List<CarModel> _cars;
   final List<CarModel> _favorites = [];
 

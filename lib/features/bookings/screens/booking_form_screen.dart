@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../cars/models/car_model.dart';
+import '../containers/bookings_container.dart';
+import '../models/booking_model.dart';
 
 class BookingFormScreen extends StatefulWidget {
   final CarModel car;
@@ -24,11 +26,21 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
 
   void _onConfirmTap() {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Booking confirmed for ${widget.car.name}'),
-        ),
+      final start = DateTime.parse(_startDateController.text);
+      final end = DateTime.parse(_endDateController.text);
+
+      final booking = BookingModel(
+        car: widget.car,
+        startDate: start,
+        endDate: end,
       );
+
+      BookingsContainer.of(context).addBooking(booking);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Booking saved!')),
+      );
+
       Navigator.pop(context);
     }
   }
@@ -36,9 +48,7 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Booking Form'),
-      ),
+      appBar: AppBar(title: const Text('Booking Form')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -46,47 +56,25 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                'Car: ${widget.car.name} (${widget.car.type}) - \$${widget.car.pricePerDay}/day',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(height: 16),
-
               TextFormField(
                 controller: _startDateController,
-                decoration: const InputDecoration(
-                  labelText: 'Start Date (YYYY-MM-DD)',
-                ),
+                decoration: const InputDecoration(labelText: 'Start Date (YYYY-MM-DD)'),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter start date';
-                  }
+                  if (value == null || value.isEmpty) return 'Please enter start date';
                   return null;
                 },
               ),
               const SizedBox(height: 16),
-
               TextFormField(
                 controller: _endDateController,
-                decoration: const InputDecoration(
-                  labelText: 'End Date (YYYY-MM-DD)',
-                ),
+                decoration: const InputDecoration(labelText: 'End Date (YYYY-MM-DD)'),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter end date';
-                  }
+                  if (value == null || value.isEmpty) return 'Please enter end date';
                   return null;
                 },
               ),
               const SizedBox(height: 24),
-
-              ElevatedButton(
-                onPressed: _onConfirmTap,
-                child: const Text('Confirm Booking'),
-              ),
+              ElevatedButton(onPressed: _onConfirmTap, child: const Text('Confirm Booking')),
             ],
           ),
         ),

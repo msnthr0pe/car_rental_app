@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'features/cars/screens/cars_list_screen.dart';
+import 'features/bookings/containers/bookings_container.dart';
+import 'features/cars/screens/cars_container.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,10 +11,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Car Rental App',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: CarsListScreen(),
+    return BookingsContainer(
+      child: MaterialApp(
+        title: 'Car Rental App',
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: CarsListScreen(),
+      ),
     );
   }
 }
