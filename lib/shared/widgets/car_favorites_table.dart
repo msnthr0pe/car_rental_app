@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:car_rental_app/features/cars/models/car_model.dart';
 import 'package:car_rental_app/shared/widgets/car_row.dart';
-import 'package:car_rental_app/features/bookings/screens/booking_form_screen.dart';
 
 class CarFavoritesTable extends StatelessWidget {
   final List<CarModel> favoriteCars;
@@ -28,14 +27,6 @@ class CarFavoritesTable extends StatelessWidget {
         return CarRow(
           car: car,
           isFavorite: true,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => BookingFormScreen(car: car),
-              ),
-            );
-          },
           onFavorite: () {
             if (onRemoveFavorite != null) {
               onRemoveFavorite!(car);
