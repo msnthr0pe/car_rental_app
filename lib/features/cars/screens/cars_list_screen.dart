@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/car_model.dart';
 import '../cars_repository.dart';
+import 'package:car_rental_app/features/bookings/screens/booking_form_screen.dart';
 
 class CarsListScreen extends StatelessWidget {
   final CarsRepository repository = CarsRepository();
@@ -18,8 +19,11 @@ class CarsListScreen extends StatelessWidget {
       body: CarsListView(
         cars: cars,
         onBookTap: (car) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Booking ${car.name}')),
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BookingFormScreen(car: car),
+            ),
           );
         },
       ),
