@@ -7,7 +7,7 @@ class CarRow extends StatelessWidget {
   final bool isFavorite;
   final VoidCallback? onFavorite;
 
-  const CarRow({
+  CarRow({
     super.key,
     required this.car,
     this.onTap,

@@ -46,6 +46,7 @@ class CarsListView extends StatefulWidget {
   _CarsListViewState createState() => _CarsListViewState();
 }
 
+// CarsListScreen.dart
 class _CarsListViewState extends State<CarsListView> {
   late List<CarModel> _cars;
   final List<CarModel> _favorites = [];
@@ -60,27 +61,27 @@ class _CarsListViewState extends State<CarsListView> {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: _cars.length,
-      itemBuilder: (context, index) {
+      itemBuilder: (BuildContext context, int index) {
         final car = _cars[index];
         return CarRow(
           car: car,
+          isFavorite: _favorites.contains(car),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => BookingFormScreen(car: car),
+                builder: (_) => BookingFormScreen(car: car),
               ),
             );
           },
           onFavorite: () {
             setState(() {
-              if (!_favorites.contains(car)) {
+              if (_favorites.contains(car)) {
+                _favorites.remove(car);
+              } else {
                 _favorites.add(car);
               }
             });
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('${car.name} added to favorites')),
-            );
           },
         );
       },
