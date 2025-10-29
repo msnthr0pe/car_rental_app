@@ -11,7 +11,6 @@ class CarsListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cars = repository.getCars();
 
-    // Теперь весь функционал навигации перенесен в CarsContainer
     return CarsContainer(cars: cars);
   }
 }

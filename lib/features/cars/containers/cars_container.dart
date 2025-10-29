@@ -3,6 +3,7 @@ import '../../bookings/models/booking_model.dart';
 import '../models/car_model.dart';
 import 'package:car_rental_app/features/bookings/screens/booking_form_screen.dart';
 import 'package:car_rental_app/shared/widgets/car_row.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 enum AppScreen { carsList, bookingForm, bookings }
 
@@ -47,29 +48,46 @@ class _CarsContainerState extends State<CarsContainer> {
   Widget build(BuildContext context) {
     Widget body;
 
+    const String logoUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Lola_T95-30.png/640px-Lola_T95-30.png';
+
     switch (_currentScreen) {
       case AppScreen.carsList:
-        body = ListView.builder(
-          itemCount: _cars.length,
-          itemBuilder: (context, index) {
-            final car = _cars[index];
-            return CarRow(
-              car: car,
-              isFavorite: _favorites.contains(car),
-              onTap: () => _navigateTo(AppScreen.bookingForm, car: car),
-              onFavorite: () {
-                setState(() {
-                  if (_favorites.contains(car)) {
-                    _favorites.remove(car);
-                  } else {
-                    _favorites.add(car);
-                  }
-                });
-              },
-            );
-          },
+        body = Column(
+          children: [
+            CachedNetworkImage(
+              imageUrl: logoUrl,
+              width: 500,
+              height: 200,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => Icon(Icons.error),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _cars.length,
+                itemBuilder: (context, index) {
+                  final car = _cars[index];
+                  return CarRow(
+                    car: car,
+                    isFavorite: _favorites.contains(car),
+                    onTap: () => _navigateTo(AppScreen.bookingForm, car: car),
+                    onFavorite: () {
+                      setState(() {
+                        if (_favorites.contains(car)) {
+                          _favorites.remove(car);
+                        } else {
+                          _favorites.add(car);
+                        }
+                      });
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         );
         break;
+
 
       case AppScreen.bookingForm:
         body = BookingFormScreen(
