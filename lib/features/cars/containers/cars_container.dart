@@ -52,42 +52,64 @@ class _CarsContainerState extends State<CarsContainer> {
 
     switch (_currentScreen) {
       case AppScreen.carsList:
-        body = Column(
-          children: [
-            CachedNetworkImage(
-              imageUrl: mainPicUrl,
-              width: 500,
-              height: 200,
-              fit: BoxFit.cover,
-              placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _cars.length,
-                itemBuilder: (context, index) {
-                  final car = _cars[index];
-                  return CarRow(
-                    car: car,
-                    isFavorite: _favorites.contains(car),
-                    onTap: () => _navigateTo(AppScreen.bookingForm, car: car),
-                    onFavorite: () {
-                      setState(() {
-                        if (_favorites.contains(car)) {
-                          _favorites.remove(car);
-                        } else {
-                          _favorites.add(car);
-                        }
-                      });
-                    },
-                  );
-                },
-              ),
-            ),
-          ],
-        );
+        body = _cars.isEmpty
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl:
+                          'https://cdn-icons-png.flaticon.com/512/1048/1048953.png',
+                      width: 150,
+                      height: 150,
+                      placeholder: (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text('No cars available.'),
+                  ],
+                ),
+              )
+            : Column(
+                children: [
+                  CachedNetworkImage(
+                    imageUrl: mainPicUrl,
+                    width: 500,
+                    height: 200,
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) =>
+                        const Center(child: CircularProgressIndicator()),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _cars.length,
+                      itemBuilder: (context, index) {
+                        final car = _cars[index];
+                        return CarRow(
+                          car: car,
+                          isFavorite: _favorites.contains(car),
+                          onTap: () =>
+                              _navigateTo(AppScreen.bookingForm, car: car),
+                          onFavorite: () {
+                            setState(() {
+                              if (_favorites.contains(car)) {
+                                _favorites.remove(car);
+                              } else {
+                                _favorites.add(car);
+                              }
+                            });
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
         break;
-
 
       case AppScreen.bookingForm:
         body = BookingFormScreen(
@@ -105,7 +127,7 @@ class _CarsContainerState extends State<CarsContainer> {
                   children: [
                     CachedNetworkImage(
                       imageUrl:
-                      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Navy_Sad_Face.png/640px-Navy_Sad_Face.png',
+                          'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Navy_Sad_Face.png/640px-Navy_Sad_Face.png',
                       width: 150,
                       height: 150,
                       placeholder: (context, url) =>
@@ -155,10 +177,10 @@ class _CarsContainerState extends State<CarsContainer> {
       body: body,
       floatingActionButton: _currentScreen == AppScreen.carsList
           ? FloatingActionButton.extended(
-        icon: const Icon(Icons.list_alt),
-        label: const Text('My Bookings'),
-        onPressed: () => _navigateTo(AppScreen.bookings),
-      )
+              icon: const Icon(Icons.list_alt),
+              label: const Text('My Bookings'),
+              onPressed: () => _navigateTo(AppScreen.bookings),
+            )
           : null,
     );
   }

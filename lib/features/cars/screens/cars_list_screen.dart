@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../containers/cars_container.dart';
 import '../cars_repository.dart';
+import '../models/car_model.dart';
 
 class CarsListScreen extends StatelessWidget {
   final CarsRepository repository = CarsRepository();
