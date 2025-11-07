@@ -99,20 +99,48 @@ class _CarsContainerState extends State<CarsContainer> {
 
       case AppScreen.bookings:
         body = _bookings.isEmpty
-            ? const Center(child: Text('No bookings yet.'))
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CachedNetworkImage(
+                      imageUrl:
+                      'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Navy_Sad_Face.png/640px-Navy_Sad_Face.png',
+                      width: 150,
+                      height: 150,
+                      placeholder: (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+                    const SizedBox(height: 16),
+                    const Text('No bookings yet.'),
+                  ],
+                ),
+              )
             : ListView.builder(
-          itemCount: _bookings.length,
-          itemBuilder: (context, index) {
-            final booking = _bookings[index];
-            final car = booking.car;
-            return ListTile(
-              title: Text(car.name),
-              subtitle: Text(
-                  'From: ${booking.startDate.toIso8601String().split("T")[0]} '
-                      'To: ${booking.endDate.toIso8601String().split("T")[0]}'),
-            );
-          },
-        );
+                itemCount: _bookings.length,
+                itemBuilder: (context, index) {
+                  final booking = _bookings[index];
+                  final car = booking.car;
+                  return ListTile(
+                    leading: CachedNetworkImage(
+                      imageUrl: car.pictureLink,
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
+                    title: Text(car.name),
+                    subtitle: Text(
+                        'From: ${booking.startDate.toIso8601String().split("T")[0]} '
+                        'To: ${booking.endDate.toIso8601String().split("T")[0]}'),
+                  );
+                },
+              );
         break;
     }
 
