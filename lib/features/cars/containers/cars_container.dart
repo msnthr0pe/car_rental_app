@@ -48,14 +48,14 @@ class _CarsContainerState extends State<CarsContainer> {
   Widget build(BuildContext context) {
     Widget body;
 
-    const String logoUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Lola_T95-30.png/640px-Lola_T95-30.png';
+    const String mainPicUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Lola_T95-30.png/640px-Lola_T95-30.png';
 
     switch (_currentScreen) {
       case AppScreen.carsList:
         body = Column(
           children: [
             CachedNetworkImage(
-              imageUrl: logoUrl,
+              imageUrl: mainPicUrl,
               width: 500,
               height: 200,
               fit: BoxFit.cover,
