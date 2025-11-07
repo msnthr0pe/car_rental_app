@@ -39,9 +39,9 @@ class BookingsScreen extends StatelessWidget {
                 return ListTile(
                   leading: CachedNetworkImage(
                     imageUrl: car.pictureLink,
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
+                    width: 150,
+                    height: 70,
+                    fit: BoxFit.contain,
                     placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
                     errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
