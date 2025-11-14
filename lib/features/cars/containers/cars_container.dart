@@ -32,10 +32,14 @@ class _CarsContainerState extends State<CarsContainer> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Available Cars'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.person),
-            onPressed: () => Navigator.of(context).pushReplacement(
+            onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(builder: (_) => const ProfileScreen()),
             ),
           ),
@@ -97,7 +101,7 @@ class _CarsContainerState extends State<CarsContainer> {
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.list_alt),
         label: const Text('My Bookings'),
-        onPressed: () => Navigator.of(context).pushReplacement(
+        onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(builder: (_) => const BookingsScreen()),
         ),
       ),

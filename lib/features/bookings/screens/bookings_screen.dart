@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:car_rental_app/features/cars/screens/cars_list_screen.dart';
 import 'package:flutter/material.dart';
 import '../containers/bookings_container.dart';
 import '../models/booking_model.dart';
@@ -16,9 +15,7 @@ class BookingsScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => CarsListScreen()),
-          ),
+          onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text('My Bookings'),
       ),

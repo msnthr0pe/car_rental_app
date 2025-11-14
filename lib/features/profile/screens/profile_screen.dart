@@ -1,5 +1,4 @@
 import 'package:car_rental_app/features/auth/screens/login_screen.dart';
-import 'package:car_rental_app/features/cars/screens/cars_list_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -12,9 +11,7 @@ class ProfileScreen extends StatelessWidget {
         title: const Text('Profile'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => CarsListScreen()),
-          ),
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: Padding(

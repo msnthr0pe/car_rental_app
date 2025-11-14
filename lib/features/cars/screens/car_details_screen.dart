@@ -19,14 +19,17 @@ class CarDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CachedNetworkImage(
-              imageUrl: car.pictureLink,
-              height: 250,
-              width: double.infinity,
-              fit: BoxFit.cover,
-              placeholder: (context, url) =>
-                  const Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+            GestureDetector(
+              onTap: () => Navigator.of(context).pop(),
+              child: CachedNetworkImage(
+                imageUrl: car.pictureLink,
+                height: 250,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
             ),
             const SizedBox(height: 16),
             Text('Type: ${car.type}', style: Theme.of(context).textTheme.titleLarge),
