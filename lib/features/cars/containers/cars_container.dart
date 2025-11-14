@@ -34,7 +34,7 @@ class _CarsContainerState extends State<CarsContainer> {
         actions: [
           IconButton(
             icon: const Icon(Icons.person),
-            onPressed: () => context.go('/profile'),
+            onPressed: () => context.push('/profile'),
           ),
         ],
       ),
@@ -92,7 +92,7 @@ class _CarsContainerState extends State<CarsContainer> {
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.list_alt),
         label: const Text('My Bookings'),
-        onPressed: () => context.go('/bookings'),
+        onPressed: () => context.push('/bookings'),
       ),
     );
   }
