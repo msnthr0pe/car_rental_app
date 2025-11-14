@@ -29,7 +29,15 @@ class _CarsContainerState extends State<CarsContainer> {
     const String mainPicUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Lola_T95-30.png/640px-Lola_T95-30.png';
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Available Cars')),
+      appBar: AppBar(
+        title: const Text('Available Cars'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () => context.go('/profile'),
+          ),
+        ],
+      ),
       body: _cars.isEmpty
           ? Center(
               child: Column(
@@ -65,7 +73,7 @@ class _CarsContainerState extends State<CarsContainer> {
                       return CarRow(
                         car: car,
                         isFavorite: _favorites.contains(car),
-                        onTap: () => context.push('/booking-form', extra: car),
+                        onTap: () => context.push('/car-details', extra: car),
                         onFavorite: () {
                           setState(() {
                             if (_favorites.contains(car)) {
