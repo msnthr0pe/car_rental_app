@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:car_rental_app/features/bookings/containers/bookings_container.dart';
-import 'package:car_rental_app/features/cars/screens/cars_list_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../cars/models/car_model.dart';
 import '../models/booking_model.dart';
 
@@ -46,9 +46,7 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
         const SnackBar(content: Text('Booking saved!')),
       );
 
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => CarsListScreen()),
-      );
+      context.go('/');
     }
   }
 
@@ -57,14 +55,10 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Booking for ${widget.car.name}'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.close),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => context.pop(),
           ),
         ],
       ),
@@ -75,7 +69,7 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               GestureDetector(
-                onTap: () => Navigator.of(context).pop(),
+                onTap: () => context.pop(),
                 child: CachedNetworkImage(
                   imageUrl: widget.car.pictureLink,
                   height: 200,
@@ -123,7 +117,7 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
               ),
               const SizedBox(height: 12),
               TextButton(
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => context.pop(),
                 child: const Text('Cancel'),
               ),
             ],
