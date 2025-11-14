@@ -11,21 +11,43 @@ class ProfileScreen extends StatelessWidget {
         title: const Text('Profile'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.go('/'),
+          onPressed: () => context.pushReplacement('/'),
         ),
       ),
-      body: const Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            CircleAvatar(
+            const Spacer(),
+            const CircleAvatar(
               radius: 50,
               backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=68'),
             ),
-            SizedBox(height: 16),
-            Text('John Doe', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            SizedBox(height: 8),
-            Text('john.doe@example.com', style: TextStyle(fontSize: 16, color: Colors.grey)),
+            const SizedBox(height: 16),
+            const Text(
+              'John Doe',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'john.doe@example.com',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+            const Spacer(flex: 2),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.error,
+                foregroundColor: Theme.of(context).colorScheme.onError,
+                minimumSize: const Size(double.infinity, 50),
+              ),
+              onPressed: () {
+                context.pushReplacement('/login');
+              },
+              child: const Text('Logout'),
+            ),
           ],
         ),
       ),
