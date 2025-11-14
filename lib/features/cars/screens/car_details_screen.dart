@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:car_rental_app/features/bookings/screens/booking_form_screen.dart';
 import 'package:car_rental_app/features/cars/models/car_model.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class CarDetailsScreen extends StatelessWidget {
   final CarModel car;
@@ -40,7 +40,9 @@ class CarDetailsScreen extends StatelessWidget {
                   textStyle: const TextStyle(fontSize: 18),
                 ),
                 onPressed: () {
-                  context.push('/booking-form', extra: car);
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => BookingFormScreen(car: car)),
+                  );
                 },
                 child: const Text('Book Now'),
               ),

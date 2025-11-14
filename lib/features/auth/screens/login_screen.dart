@@ -1,5 +1,5 @@
+import 'package:car_rental_app/features/cars/screens/cars_list_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -38,7 +38,9 @@ class LoginScreen extends StatelessWidget {
                 minimumSize: const Size(double.infinity, 50),
               ),
               onPressed: () {
-                context.pushReplacement('/');
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => CarsListScreen()),
+                );
               },
               child: const Text('Login'),
             ),

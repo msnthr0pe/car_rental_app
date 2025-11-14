@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:car_rental_app/features/bookings/containers/bookings_container.dart';
+import 'package:car_rental_app/features/cars/screens/cars_list_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../../cars/models/car_model.dart';
 import '../models/booking_model.dart';
 
@@ -46,7 +46,9 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
         const SnackBar(content: Text('Booking saved!')),
       );
 
-      context.go('/');
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => CarsListScreen()),
+      );
     }
   }
 
@@ -57,7 +59,9 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
         title: Text('Booking for ${widget.car.name}'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.pop(),
+          onPressed: () => Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (_) => CarsListScreen()),
+          ),
         ),
       ),
       body: Padding(
@@ -112,7 +116,9 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
               ),
               const SizedBox(height: 12),
               TextButton(
-                onPressed: () => context.pop(),
+                onPressed: () => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (_) => CarsListScreen()),
+                ),
                 child: const Text('Cancel'),
               ),
             ],

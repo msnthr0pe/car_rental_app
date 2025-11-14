@@ -1,6 +1,7 @@
+import 'package:car_rental_app/features/bookings/screens/bookings_screen.dart';
+import 'package:car_rental_app/features/cars/screens/car_details_screen.dart';
+import 'package:car_rental_app/features/profile/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import '../../bookings/models/booking_model.dart';
 import '../models/car_model.dart';
 import '../../../shared/widgets/car_row.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -34,7 +35,9 @@ class _CarsContainerState extends State<CarsContainer> {
         actions: [
           IconButton(
             icon: const Icon(Icons.person),
-            onPressed: () => context.pushReplacement('/profile'),
+            onPressed: () => Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => const ProfileScreen()),
+            ),
           ),
         ],
       ),
@@ -73,7 +76,9 @@ class _CarsContainerState extends State<CarsContainer> {
                       return CarRow(
                         car: car,
                         isFavorite: _favorites.contains(car),
-                        onTap: () => context.push('/car-details', extra: car),
+                        onTap: () => Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (_) => CarDetailsScreen(car: car)),
+                        ),
                         onFavorite: () {
                           setState(() {
                             if (_favorites.contains(car)) {
@@ -92,7 +97,9 @@ class _CarsContainerState extends State<CarsContainer> {
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.list_alt),
         label: const Text('My Bookings'),
-        onPressed: () => context.pushReplacement('/bookings'),
+        onPressed: () => Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const BookingsScreen()),
+        ),
       ),
     );
   }
