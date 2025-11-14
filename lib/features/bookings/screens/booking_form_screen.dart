@@ -59,9 +59,7 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
         title: Text('Booking for ${widget.car.name}'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => CarsListScreen()),
-          ),
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: Padding(
@@ -116,9 +114,7 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
               ),
               const SizedBox(height: 12),
               TextButton(
-                onPressed: () => Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (_) => CarsListScreen()),
-                ),
+                onPressed: () => Navigator.of(context).pop(),
                 child: const Text('Cancel'),
               ),
             ],

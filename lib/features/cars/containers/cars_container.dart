@@ -76,7 +76,7 @@ class _CarsContainerState extends State<CarsContainer> {
                       return CarRow(
                         car: car,
                         isFavorite: _favorites.contains(car),
-                        onTap: () => Navigator.of(context).pushReplacement(
+                        onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(builder: (_) => CarDetailsScreen(car: car)),
                         ),
                         onFavorite: () {

@@ -40,7 +40,7 @@ class CarDetailsScreen extends StatelessWidget {
                   textStyle: const TextStyle(fontSize: 18),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushReplacement(
+                  Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => BookingFormScreen(car: car)),
                   );
                 },
