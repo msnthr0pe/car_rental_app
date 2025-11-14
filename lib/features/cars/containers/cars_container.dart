@@ -33,7 +33,7 @@ class _CarsContainerState extends State<CarsContainer> {
         actions: [
           IconButton(
             icon: const Icon(Icons.person),
-            onPressed: () => context.push('/profile'),
+            onPressed: () => context.push('/main/profile'),
           ),
         ],
       ),
@@ -72,7 +72,7 @@ class _CarsContainerState extends State<CarsContainer> {
                       return CarRow(
                         car: car,
                         isFavorite: _favorites.contains(car),
-                        onTap: () => context.push('/car-details', extra: car),
+                        onTap: () => context.push('/main/car-details', extra: car),
                         onFavorite: () {
                           setState(() {
                             if (_favorites.contains(car)) {
@@ -91,7 +91,7 @@ class _CarsContainerState extends State<CarsContainer> {
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.list_alt),
         label: const Text('My Bookings'),
-        onPressed: () => context.push('/bookings'),
+        onPressed: () => context.push('/main/bookings'),
       ),
     );
   }

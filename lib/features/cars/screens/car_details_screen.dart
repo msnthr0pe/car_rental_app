@@ -43,7 +43,7 @@ class CarDetailsScreen extends StatelessWidget {
                   textStyle: const TextStyle(fontSize: 18),
                 ),
                 onPressed: () {
-                  context.push('/booking-form', extra: car);
+                  context.push('/main/booking-form', extra: car);
                 },
                 child: const Text('Book Now'),
               ),

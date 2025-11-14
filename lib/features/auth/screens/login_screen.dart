@@ -38,7 +38,7 @@ class LoginScreen extends StatelessWidget {
                 minimumSize: const Size(double.infinity, 50),
               ),
               onPressed: () {
-                context.pushReplacement('/');
+                context.pushReplacement('/main');
               },
               child: const Text('Login'),
             ),

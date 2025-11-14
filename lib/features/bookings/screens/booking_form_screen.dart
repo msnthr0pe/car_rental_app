@@ -46,7 +46,7 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
         const SnackBar(content: Text('Booking saved!')),
       );
 
-      context.go('/');
+      context.go('/main');
     }
   }
 

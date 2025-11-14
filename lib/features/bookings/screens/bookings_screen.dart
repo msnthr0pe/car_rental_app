@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../containers/bookings_container.dart';
 import '../models/booking_model.dart';
 import '../../cars/models/car_model.dart';
@@ -13,6 +14,10 @@ class BookingsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.pop(),
+        ),
         title: const Text('My Bookings'),
       ),
       body: bookings.isEmpty

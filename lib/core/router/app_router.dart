@@ -12,42 +12,48 @@ final GoRouter router = GoRouter(
   initialLocation: '/login',
   routes: <RouteBase>[
     GoRoute(
+      path: '/',
+      redirect: (_, __) => '/login',
+    ),
+    GoRoute(
       path: '/login',
       builder: (BuildContext context, GoRouterState state) {
         return const LoginScreen();
       },
     ),
     GoRoute(
-      path: '/',
+      path: '/main',
       builder: (BuildContext context, GoRouterState state) {
         return CarsListScreen();
       },
-    ),
-    GoRoute(
-      path: '/car-details',
-      builder: (BuildContext context, GoRouterState state) {
-        final car = state.extra as CarModel;
-        return CarDetailsScreen(car: car);
-      },
-    ),
-    GoRoute(
-      path: '/booking-form',
-      builder: (BuildContext context, GoRouterState state) {
-        final car = state.extra as CarModel;
-        return BookingFormScreen(car: car);
-      },
-    ),
-    GoRoute(
-      path: '/profile',
-      builder: (BuildContext context, GoRouterState state) {
-        return const ProfileScreen();
-      },
-    ),
-    GoRoute(
-      path: '/bookings',
-      builder: (BuildContext context, GoRouterState state) {
-        return const BookingsScreen();
-      },
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'car-details',
+          builder: (BuildContext context, GoRouterState state) {
+            final car = state.extra as CarModel;
+            return CarDetailsScreen(car: car);
+          },
+        ),
+        GoRoute(
+          path: 'booking-form',
+          builder: (BuildContext context, GoRouterState state) {
+            final car = state.extra as CarModel;
+            return BookingFormScreen(car: car);
+          },
+        ),
+        GoRoute(
+          path: 'profile',
+          builder: (BuildContext context, GoRouterState state) {
+            return const ProfileScreen();
+          },
+        ),
+        GoRoute(
+          path: 'bookings',
+          builder: (BuildContext context, GoRouterState state) {
+            return const BookingsScreen();
+          },
+        ),
+      ],
     ),
   ],
 );
