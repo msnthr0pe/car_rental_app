@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:car_rental_app/features/bookings/containers/bookings_container.dart';
+import 'package:car_rental_app/core/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../cars/models/car_model.dart';
@@ -40,7 +40,7 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
         endDate: end,
       );
 
-      BookingsContainer.of(context).addBooking(booking);
+      AppState.of(context)!.addBooking(booking);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Booking saved!')),

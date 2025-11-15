@@ -1,4 +1,5 @@
 import 'package:car_rental_app/features/auth/screens/login_screen.dart';
+import 'package:car_rental_app/features/bookings/models/booking_model.dart';
 import 'package:car_rental_app/features/bookings/screens/booking_form_screen.dart';
 import 'package:car_rental_app/features/bookings/screens/bookings_screen.dart';
 import 'package:car_rental_app/features/cars/models/car_model.dart';
@@ -8,7 +9,83 @@ import 'package:car_rental_app/features/profile/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+// AppState is now adapted to the project, providing booking state.
+class AppState extends InheritedWidget {
+  const AppState({
+    super.key,
+    required this.bookings,
+    required this.addBooking,
+    required super.child,
+  });
+
+  final List<BookingModel> bookings;
+  final void Function(BookingModel) addBooking;
+
+  static AppState? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<AppState>();
+  }
+
+  @override
+  bool updateShouldNotify(AppState oldWidget) {
+    // Notify listeners only if the bookings list instance has changed.
+    return bookings != oldWidget.bookings;
+  }
+}
+
+final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
+
+class MainScreen extends StatefulWidget {
+  const MainScreen({
+    super.key,
+    required this.navigationShell,
+  });
+
+  final StatefulNavigationShell navigationShell;
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  // The state management logic is now here.
+  List<BookingModel> _bookings = [];
+
+  void _addBooking(BookingModel booking) {
+    setState(() {
+      _bookings = [..._bookings, booking];
+    });
+  }
+
+  void _onTap(int index) {
+    widget.navigationShell.goBranch(
+      index,
+      initialLocation: index == widget.navigationShell.currentIndex,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AppState(
+      bookings: _bookings,
+      addBooking: _addBooking,
+      child: Scaffold(
+        body: widget.navigationShell,
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: widget.navigationShell.currentIndex,
+          onTap: _onTap,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.directions_car), label: 'Cars'),
+            BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Bookings'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 final GoRouter router = GoRouter(
+  navigatorKey: _rootNavigatorKey,
   initialLocation: '/login',
   routes: <RouteBase>[
     GoRoute(
@@ -21,37 +98,59 @@ final GoRouter router = GoRouter(
         return const LoginScreen();
       },
     ),
-    GoRoute(
-      path: '/main',
-      builder: (BuildContext context, GoRouterState state) {
-        return CarsListScreen();
+
+    // The ShellRoute now uses the stateful MainScreen as its builder.
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return MainScreen(navigationShell: navigationShell);
       },
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'car-details',
-          builder: (BuildContext context, GoRouterState state) {
-            final car = state.extra as CarModel;
-            return CarDetailsScreen(car: car);
-          },
+      branches: [
+        // The first branch, for the 'Cars' tab.
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/main',
+              builder: (context, state) => CarsListScreen(),
+              routes: [
+                GoRoute(
+                  path: 'car-details', // Full path: /main/car-details
+                  parentNavigatorKey: _rootNavigatorKey,
+                  builder: (context, state) {
+                    final car = state.extra as CarModel;
+                    return CarDetailsScreen(car: car);
+                  },
+                ),
+                GoRoute(
+                  path: 'booking-form', // Full path: /main/booking-form
+                  parentNavigatorKey: _rootNavigatorKey,
+                  builder: (context, state) {
+                    final car = state.extra as CarModel;
+                    return BookingFormScreen(car: car);
+                  },
+                ),
+              ],
+            ),
+          ],
         ),
-        GoRoute(
-          path: 'booking-form',
-          builder: (BuildContext context, GoRouterState state) {
-            final car = state.extra as CarModel;
-            return BookingFormScreen(car: car);
-          },
+
+        // The second branch, for the 'Bookings' tab.
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/bookings',
+              builder: (context, state) => const BookingsScreen(),
+            ),
+          ],
         ),
-        GoRoute(
-          path: 'profile',
-          builder: (BuildContext context, GoRouterState state) {
-            return const ProfileScreen();
-          },
-        ),
-        GoRoute(
-          path: 'bookings',
-          builder: (BuildContext context, GoRouterState state) {
-            return const BookingsScreen();
-          },
+
+        // The third branch, for the 'Profile' tab.
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/profile',
+              builder: (context, state) => const ProfileScreen(),
+            ),
+          ],
         ),
       ],
     ),
