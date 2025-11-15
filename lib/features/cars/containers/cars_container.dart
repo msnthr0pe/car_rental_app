@@ -30,12 +30,6 @@ class _CarsContainerState extends State<CarsContainer> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Available Cars'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.person),
-            onPressed: () => context.push('/main/profile'),
-          ),
-        ],
       ),
       body: _cars.isEmpty
           ? Center(
@@ -88,11 +82,6 @@ class _CarsContainerState extends State<CarsContainer> {
                 ),
               ],
             ),
-      floatingActionButton: FloatingActionButton.extended(
-        icon: const Icon(Icons.list_alt),
-        label: const Text('My Bookings'),
-        onPressed: () => context.push('/main/bookings'),
-      ),
     );
   }
 }
