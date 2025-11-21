@@ -1,11 +1,19 @@
+import 'package:car_rental_app/auth/cubit/auth_cubit.dart';
+import 'package:car_rental_app/core/bloc/bloc_observer.dart';
 import 'package:car_rental_app/core/get_it/get_it.dart';
 import 'package:car_rental_app/core/router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  // Initialize get_it before running the app.
+  Bloc.observer = AppBlocObserver();
   setupLocator();
-  runApp(const MyApp());
+  runApp(
+    BlocProvider(
+      create: (context) => AuthCubit(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
