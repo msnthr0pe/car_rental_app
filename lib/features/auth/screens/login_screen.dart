@@ -1,14 +1,43 @@
+import 'package:car_rental_app/auth/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
+  State<LoginScreen> createState() => _LoginScreenState();
+}
 
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _isPasswordVisible = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _login() {
+    final login = _emailController.text;
+    final password = _passwordController.text;
+
+    if (login.isNotEmpty && password.isNotEmpty) {
+      context.read<AuthCubit>().login(login);
+      context.pushReplacement('/main');
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter login and password')),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Login')),
       body: Padding(
@@ -17,7 +46,7 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
-              controller: emailController,
+              controller: _emailController,
               decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
@@ -25,11 +54,21 @@ class LoginScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
+              controller: _passwordController,
+              obscureText: !_isPasswordVisible,
+              decoration: InputDecoration(
                 labelText: 'Password',
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                ),
               ),
             ),
             const SizedBox(height: 20),
@@ -37,9 +76,7 @@ class LoginScreen extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 50),
               ),
-              onPressed: () {
-                context.pushReplacement('/main');
-              },
+              onPressed: _login,
               child: const Text('Login'),
             ),
           ],
