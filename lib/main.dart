@@ -1,4 +1,5 @@
 import 'package:car_rental_app/auth/cubit/auth_cubit.dart';
+import 'package:car_rental_app/features/bookings/cubit/bookings_cubit.dart';
 import 'package:car_rental_app/core/bloc/bloc_observer.dart';
 import 'package:car_rental_app/core/get_it/get_it.dart';
 import 'package:car_rental_app/core/router/app_router.dart';
@@ -9,8 +10,11 @@ void main() {
   Bloc.observer = AppBlocObserver();
   setupLocator();
   runApp(
-    BlocProvider(
-      create: (context) => AuthCubit(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthCubit()),
+        BlocProvider(create: (context) => BookingsCubit()),
+      ],
       child: const MyApp(),
     ),
   );

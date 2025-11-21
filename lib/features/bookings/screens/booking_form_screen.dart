@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:car_rental_app/core/router/app_router.dart';
+import 'package:car_rental_app/features/bookings/cubit/bookings_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../cars/models/car_model.dart';
 import '../models/booking_model.dart';
@@ -31,8 +32,15 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
 
   void _onConfirmTap() {
     if (_formKey.currentState!.validate()) {
-      final start = DateTime.parse(_startDateController.text);
-      final end = DateTime.parse(_endDateController.text);
+      final start = DateTime.tryParse(_startDateController.text);
+      final end = DateTime.tryParse(_endDateController.text);
+
+      if (start == null || end == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid date format. Use YYYY-MM-DD')),
+        );
+        return;
+      }
 
       final booking = BookingModel(
         car: widget.car,
@@ -40,7 +48,7 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
         endDate: end,
       );
 
-      AppState.of(context)!.addBooking(booking);
+      context.read<BookingsCubit>().addBooking(booking);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Booking saved!')),
