@@ -19,4 +19,12 @@ class BookingsCubit extends Cubit<BookingsState> {
   void addBooking(BookingModel booking) {
     emit(state.copyWith(bookings: [...state.bookings, booking]));
   }
+
+  void updateBooking(int index, BookingModel updatedBooking) {
+    final updatedBookings = List<BookingModel>.from(state.bookings);
+    if (index >= 0 && index < updatedBookings.length) {
+      updatedBookings[index] = updatedBooking;
+      emit(state.copyWith(bookings: updatedBookings));
+    }
+  }
 }
