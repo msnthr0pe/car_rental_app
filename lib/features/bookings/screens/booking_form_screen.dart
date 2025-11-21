@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:car_rental_app/features/bookings/cubit/booking_car_cubit.dart';
 import 'package:car_rental_app/features/bookings/cubit/bookings_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -117,6 +118,46 @@ class _BookingFormScreenState extends State<BookingFormScreen> {
                     ),
                   ],
                 ),
+              ),
+              const SizedBox(height: 24),
+              const Text(
+                'Comment about the car:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 12),
+              BlocBuilder<BookingCarCubit, Map<String, String>>(
+                builder: (context, comments) {
+                  final currentComment = comments[widget.car.name];
+                  final options = [
+                    "приятный салон",
+                    "хороша в вождении",
+                    "экономичная",
+                    "быстрая"
+                  ];
+
+                  return Wrap(
+                    spacing: 8.0,
+                    runSpacing: 8.0,
+                    children: options.map((option) {
+                      final isSelected = currentComment == option;
+                      return ChoiceChip(
+                        label: Text(option),
+                        selected: isSelected,
+                        onSelected: (selected) {
+                          if (selected) {
+                            context
+                                .read<BookingCarCubit>()
+                                .setComment(widget.car.name, option);
+                          } else {
+                            context
+                                .read<BookingCarCubit>()
+                                .clearComment(widget.car.name);
+                          }
+                        },
+                      );
+                    }).toList(),
+                  );
+                },
               ),
               const SizedBox(height: 24),
               ElevatedButton(

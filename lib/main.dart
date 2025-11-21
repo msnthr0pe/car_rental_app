@@ -1,4 +1,5 @@
 import 'package:car_rental_app/auth/cubit/auth_cubit.dart';
+import 'package:car_rental_app/features/bookings/cubit/booking_car_cubit.dart';
 import 'package:car_rental_app/features/bookings/cubit/bookings_cubit.dart';
 import 'package:car_rental_app/features/cars/cubit/cars_cubit.dart';
 import 'package:car_rental_app/features/cars/cubit/favorites_cubit.dart';
@@ -18,6 +19,7 @@ void main() {
         BlocProvider(create: (context) => BookingsCubit()),
         BlocProvider(create: (context) => FavoritesCubit()),
         BlocProvider(create: (context) => CarsCubit()),
+        BlocProvider(create: (context) => BookingCarCubit()),
       ],
       child: const MyApp(),
     ),
