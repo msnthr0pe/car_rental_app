@@ -3,6 +3,7 @@ import 'package:car_rental_app/features/bookings/cubit/booking_car_cubit.dart';
 import 'package:car_rental_app/features/bookings/cubit/bookings_cubit.dart';
 import 'package:car_rental_app/features/cars/cubit/cars_cubit.dart';
 import 'package:car_rental_app/features/cars/cubit/favorites_cubit.dart';
+import 'package:car_rental_app/features/profile/cubit/profile_cubit.dart';
 import 'package:car_rental_app/core/bloc/bloc_observer.dart';
 import 'package:car_rental_app/core/get_it/get_it.dart';
 import 'package:car_rental_app/core/router/app_router.dart';
@@ -20,6 +21,7 @@ void main() {
         BlocProvider(create: (context) => FavoritesCubit()),
         BlocProvider(create: (context) => CarsCubit()),
         BlocProvider(create: (context) => BookingCarCubit()),
+        BlocProvider(create: (context) => ProfileCubit()),
       ],
       child: const MyApp(),
     ),
