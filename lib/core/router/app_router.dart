@@ -5,6 +5,7 @@ import 'package:car_rental_app/features/bookings/screens/bookings_screen.dart';
 import 'package:car_rental_app/features/cars/models/car_model.dart';
 import 'package:car_rental_app/features/cars/screens/car_details_screen.dart';
 import 'package:car_rental_app/features/cars/screens/cars_list_screen.dart';
+import 'package:car_rental_app/features/cars/screens/favorites_screen.dart';
 import 'package:car_rental_app/features/profile/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -73,8 +74,12 @@ class _MainScreenState extends State<MainScreen> {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: widget.navigationShell.currentIndex,
           onTap: _onTap,
+          type: BottomNavigationBarType.fixed,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.directions_car), label: 'Cars'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.directions_car), label: 'Cars'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.favorite), label: 'Favorites'),
             BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Bookings'),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
@@ -133,7 +138,17 @@ final GoRouter router = GoRouter(
           ],
         ),
 
-        // The second branch, for the 'Bookings' tab.
+        // The second branch, for the 'Favorites' tab.
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/favorites',
+              builder: (context, state) => const FavoritesScreen(),
+            ),
+          ],
+        ),
+
+        // The third branch, for the 'Bookings' tab.
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -143,7 +158,7 @@ final GoRouter router = GoRouter(
           ],
         ),
 
-        // The third branch, for the 'Profile' tab.
+        // The fourth branch, for the 'Profile' tab.
         StatefulShellBranch(
           routes: [
             GoRoute(
