@@ -3,6 +3,7 @@ import 'package:car_rental_app/features/bookings/models/booking_model.dart';
 import 'package:car_rental_app/features/bookings/screens/booking_form_screen.dart';
 import 'package:car_rental_app/features/bookings/screens/bookings_screen.dart';
 import 'package:car_rental_app/features/cars/models/car_model.dart';
+import 'package:car_rental_app/features/cars/screens/add_car_screen.dart';
 import 'package:car_rental_app/features/cars/screens/car_details_screen.dart';
 import 'package:car_rental_app/features/cars/screens/cars_list_screen.dart';
 import 'package:car_rental_app/features/cars/screens/favorites_screen.dart';
@@ -80,6 +81,7 @@ class _MainScreenState extends State<MainScreen> {
                 icon: Icon(Icons.directions_car), label: 'Cars'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.favorite), label: 'Favorites'),
+            BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add Car'),
             BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Bookings'),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],
@@ -148,7 +150,17 @@ final GoRouter router = GoRouter(
           ],
         ),
 
-        // The third branch, for the 'Bookings' tab.
+        // The third branch, for the 'Add Car' tab.
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/add-car',
+              builder: (context, state) => const AddCarScreen(),
+            ),
+          ],
+        ),
+
+        // The fourth branch, for the 'Bookings' tab.
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -158,7 +170,7 @@ final GoRouter router = GoRouter(
           ],
         ),
 
-        // The fourth branch, for the 'Profile' tab.
+        // The fifth branch, for the 'Profile' tab.
         StatefulShellBranch(
           routes: [
             GoRoute(
