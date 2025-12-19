@@ -1,3 +1,4 @@
+import 'package:car_rental_app/features/auth/cubit/auth_cubit.dart';
 import 'package:car_rental_app/features/auth/screens/login_screen.dart';
 import 'package:car_rental_app/features/bookings/models/booking_model.dart';
 import 'package:car_rental_app/features/bookings/screens/booking_form_screen.dart';
@@ -8,7 +9,9 @@ import 'package:car_rental_app/features/cars/screens/car_details_screen.dart';
 import 'package:car_rental_app/features/cars/screens/cars_list_screen.dart';
 import 'package:car_rental_app/features/cars/screens/favorites_screen.dart';
 import 'package:car_rental_app/features/profile/screens/profile_screen.dart';
+import 'package:car_rental_app/features/profile/screens/subscription_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 // AppState is now adapted to the project, providing booking state.
@@ -91,7 +94,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-final GoRouter router = GoRouter(
+final router = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/login',
   routes: <RouteBase>[
@@ -101,18 +104,19 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/login',
-      builder: (BuildContext context, GoRouterState state) {
-        return const LoginScreen();
-      },
+      builder: (context, state) => BlocProvider(
+        create: (context) => AuthCubit(),
+        child: const LoginScreen(),
+      ),
     ),
-
-    // The ShellRoute now uses the stateful MainScreen as its builder.
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
-        return MainScreen(navigationShell: navigationShell);
+        return BlocProvider(
+          create: (context) => AuthCubit(),
+          child: MainScreen(navigationShell: navigationShell),
+        );
       },
       branches: [
-        // The first branch, for the 'Cars' tab.
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -120,7 +124,7 @@ final GoRouter router = GoRouter(
               builder: (context, state) => CarsListScreen(),
               routes: [
                 GoRoute(
-                  path: 'car-details', // Full path: /main/car-details
+                  path: 'car-details',
                   parentNavigatorKey: _rootNavigatorKey,
                   builder: (context, state) {
                     final car = state.extra as CarModel;
@@ -128,7 +132,7 @@ final GoRouter router = GoRouter(
                   },
                 ),
                 GoRoute(
-                  path: 'booking-form', // Full path: /main/booking-form
+                  path: 'booking-form',
                   parentNavigatorKey: _rootNavigatorKey,
                   builder: (context, state) {
                     final car = state.extra as CarModel;
@@ -139,8 +143,6 @@ final GoRouter router = GoRouter(
             ),
           ],
         ),
-
-        // The second branch, for the 'Favorites' tab.
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -149,8 +151,6 @@ final GoRouter router = GoRouter(
             ),
           ],
         ),
-
-        // The third branch, for the 'Add Car' tab.
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -159,8 +159,6 @@ final GoRouter router = GoRouter(
             ),
           ],
         ),
-
-        // The fourth branch, for the 'Bookings' tab.
         StatefulShellBranch(
           routes: [
             GoRoute(
@@ -169,13 +167,18 @@ final GoRouter router = GoRouter(
             ),
           ],
         ),
-
-        // The fifth branch, for the 'Profile' tab.
         StatefulShellBranch(
           routes: [
             GoRoute(
               path: '/profile',
               builder: (context, state) => const ProfileScreen(),
+              routes: [
+                GoRoute(
+                  path: 'subscription',
+                  parentNavigatorKey: _rootNavigatorKey,
+                  builder: (context, state) => const SubscriptionScreen(),
+                ),
+              ],
             ),
           ],
         ),

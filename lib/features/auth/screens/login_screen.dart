@@ -1,4 +1,4 @@
-import 'package:car_rental_app/auth/cubit/auth_cubit.dart';
+import 'package:car_rental_app/features/auth/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
