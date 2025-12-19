@@ -50,6 +50,14 @@ class ProfileScreen extends StatelessWidget {
                     context.go('/profile/subscription');
                   },
                 ),
+                ListTile(
+                  leading: const Icon(Icons.feedback),
+                  title: const Text('Send Feedback'),
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    context.go('/profile/feedback');
+                  },
+                ),
                 const Spacer(),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(

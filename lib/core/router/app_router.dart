@@ -8,6 +8,7 @@ import 'package:car_rental_app/features/cars/screens/add_car_screen.dart';
 import 'package:car_rental_app/features/cars/screens/car_details_screen.dart';
 import 'package:car_rental_app/features/cars/screens/cars_list_screen.dart';
 import 'package:car_rental_app/features/cars/screens/favorites_screen.dart';
+import 'package:car_rental_app/features/profile/screens/feedback_screen.dart';
 import 'package:car_rental_app/features/profile/screens/profile_screen.dart';
 import 'package:car_rental_app/features/profile/screens/subscription_screen.dart';
 import 'package:flutter/material.dart';
@@ -177,6 +178,11 @@ final router = GoRouter(
                   path: 'subscription',
                   parentNavigatorKey: _rootNavigatorKey,
                   builder: (context, state) => const SubscriptionScreen(),
+                ),
+                GoRoute(
+                  path: 'feedback',
+                  parentNavigatorKey: _rootNavigatorKey,
+                  builder: (context, state) => const FeedbackScreen(),
                 ),
               ],
             ),
